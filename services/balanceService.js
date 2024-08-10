@@ -30,3 +30,17 @@ exports.updateBalances = async (trades) => {
     await newBalanceDoc.save();
   }
 };
+
+// Function to Query the database to find the balance record at or before the specified timestamp
+exports.getBalanceAtTimestamp = async (timestamp) => {
+  const parsedTimestamp = new Date(timestamp);
+
+  // Check if the parsed date is valid
+  if (isNaN(parsedTimestamp.getTime())) {
+    throw new Error('Invalid timestamp format');
+  }
+
+  return Balance.findOne({
+    timestamp: { $lte: parsedTimestamp }
+  }).sort({ timestamp: -1 });
+};
