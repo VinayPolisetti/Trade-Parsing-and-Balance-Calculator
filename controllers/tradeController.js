@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const { insertTrades } = require('../services/tardeService');
+const { updateBalances } = require('../services/balanceService');
 const {  processCSVTradeData } = require('../utils/csvUtils')
 
 // Handler for uploading and processing trade data from a CSV file
@@ -16,6 +17,7 @@ exports.uploadTradeDataCSV = async (req, res) => {
 
     // Insert the new trade data and update balance respectively
     await insertTrades(trades);
+    await updateBalances(trades);
 
     // Respond with a message
     res.status(201).send('File processed and data stored');
