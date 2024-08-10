@@ -1,6 +1,8 @@
 const express = require("express");
 const connectDB = require("./config/database");
 
+const tradeRoutes = require("./routes/tradeRoutes");
+
 require("dotenv").config();
 
 const app = express();
@@ -10,7 +12,7 @@ app.use(express.json());
 connectDB();
 
 // Route handlers
-
+app.use("/api/trades", tradeRoutes); // Routes for trade-related operations
 
 // Error handling middleware
 app.use((err, req, res, next) => {
