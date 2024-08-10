@@ -1,0 +1,25 @@
+const express = require("express");
+const connectDB = require("./config/database");
+
+require("dotenv").config();
+
+const app = express();
+app.use(express.json());
+
+// Connect to the database
+connectDB();
+
+// Route handlers
+
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log error details
+  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
